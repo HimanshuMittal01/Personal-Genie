@@ -1,31 +1,54 @@
 {% extends "layout.html" %}
 
-{% block content %}
+{% block body %}
+<div class="row">
+    <div class="col s4">
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="{{url_for('static', filename='images/television.jpeg')}}">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Television Sets<i class="material-icons right">more_vert</i></span>
+                <p><a href="{{url_for('tvsearch')}}">Discover the best T.V sets for your needs</a></p>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Television<i class="material-icons right">close</i></span>
+                <p>Experience the multitude of redefined HD, 3D- TV sets.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col s4">
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="{{url_for('static', filename='images/mobiles.jpg')}}">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Smartphones<i class="material-icons right">more_vert</i></span>
+                <p><a href="#">Discover the coolest feature-packed smart phones in your budget!</a></p>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Smartphones<i class="material-icons right">close</i></span>
+                <p>Discover the coolest feature-packed smart phones in your budget!</p>
+            </div>
+        </div>
+    </div>
+    <div class="col s4">
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="{{url_for('static', filename='images/laptops.jpg')}}">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Laptops<i class="material-icons right">more_vert</i></span>
+                <p><a href="#">Laptops!</a></p>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Laptops<i class="material-icons right">close</i></span>
+                <p>Experience whatever you can on the laptop :P</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-<form action="#">
-        <p>
-          <label>
-            <input name="group1" type="radio" checked />
-            <span>Red</span>
-          </label>
-        </p>
-        <p>
-          <label>
-            <input name="group1" type="radio" />
-            <span>Yellow</span>
-          </label>
-        </p>
-        <p>
-          <label>
-            <input class="with-gap" name="group1" type="radio"  />
-            <span>Green</span>
-          </label>
-        </p>
-        <p>
-          <label>
-            <input name="group1" type="radio" disabled="disabled" />
-            <span>Brown</span>
-          </label>
-        </p>
-      </form>
+     
+
 {% endblock %}
