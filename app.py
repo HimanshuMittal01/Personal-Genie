@@ -21,6 +21,10 @@ def index():
 def inspire():
     return render_template('inspireme.html')
 
+@app.route('/output')
+def output():
+	return render_template('output.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
 
