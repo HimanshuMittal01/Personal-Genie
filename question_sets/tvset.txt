@@ -1,3 +1,12 @@
-How's the hackathon going?
-Sometimes, I feel like I'm a -
-When life gives you lemons what do you do?
+trait question 1
+trait question 2
+trait question 3
+trait question 4
+trait question 5
+trait question 6
+feature question1
+feature question2
+feature question3
+feature question4
+feature question5
+feature question6

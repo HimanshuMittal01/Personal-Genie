@@ -8,12 +8,13 @@ import csv
 #answers can be accessed from the answers[] array
 #Questions need to be written in the questions.txt file
 #corresponding options need to be filled in the tvops.csv file
-
+#change no_of_trait_questions accordingly below
 app = Flask(__name__)
 answers =[]
 questions=[]
 traits=[]
-trait_collection_finished= False
+no_of_trait_questions=6
+final_output_array=[]
 app.secret_key = 'development key'
 
 qno=0
@@ -35,11 +36,13 @@ class QuestionForm(FlaskForm):
 
 @app.route('/tvsearch', methods=['GET','POST'])
 def tvsearch():
+    global qno
+    
     f = open("question_sets/tvset.txt")
     questions=f.readlines()
     f.close()
     form = QuestionForm()
-    global qno
+    
     if request.method == 'POST':
         #Render the same screen when no radio button is selected
         if form.validate() == False:
@@ -53,10 +56,9 @@ def tvsearch():
 
         else:
             #re-initializing the form everytime to update options
-            
             answers.append(form.Options.data)
+
             qno=qno+1
-            
 
             form.Options.choices=[('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])] 
             return render_template('tvsearch.html', form=form, question=questions[qno])
@@ -84,8 +86,17 @@ def inspire():
 
 @app.route('/output')
 def output():
+    global traits
+    global answers
+    global no_of_trait_questions
+    traits=answers[0:no_of_trait_questions]
+    del answers[0:no_of_trait_questions]
+    
+    
     #final_output_array= recommendation_algorithm(answers, traits)
-	return render_template('output.html')
+    #For eg= your output is as follows
+    final_output_array=['Television 1', 'Televison 2', 'Television 3']
+    return render_template('output.html', p1= final_output_array[0], p2=final_output_array[1], p3=final_output_array[2])
 
 @app.route('/recommendation1')
 def reccomendation1():
@@ -99,7 +110,6 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 def all_questions_answered(qarray):
-    print(len(qarray), qno)
     if(len(qarray)==qno+1):
         return True
     else:
@@ -110,7 +120,11 @@ def clear_all_selections():
     qno=0
     global answers
     del answers[:]
+    global trait_collection_finished
+    trait_collection_finished=False
+    global traits
+    del traits[:]
 
-def recommendation_algorithm(tech_answers_array, personality_answers_array ):
+def recommendation_algorithm(answers, traits ):
     # Make sure to return a list/array object or anything else and changes on the @output route accordingly
     pass
