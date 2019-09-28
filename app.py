@@ -12,6 +12,8 @@ import csv
 app = Flask(__name__)
 answers =[]
 questions=[]
+traits=[]
+trait_collection_finished= False
 app.secret_key = 'development key'
 
 qno=0
@@ -42,17 +44,20 @@ def tvsearch():
         #Render the same screen when no radio button is selected
         if form.validate() == False:
             return render_template('tvsearch.html', form = form, question=questions[qno])
-
+        
+        
+        elif(all_questions_answered(questions)):
+            
+            return redirect('/output')
+        
 
         else:
             #re-initializing the form everytime to update options
             
             answers.append(form.Options.data)
             qno=qno+1
-            if(all_questions_answered(questions)):
-                
-                return redirect('/output')
             
+
             form.Options.choices=[('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])] 
             return render_template('tvsearch.html', form=form, question=questions[qno])
 
@@ -95,7 +100,7 @@ if __name__ == '__main__':
 
 def all_questions_answered(qarray):
     print(len(qarray), qno)
-    if(len(qarray)==qno):
+    if(len(qarray)==qno+1):
         return True
     else:
         return False
