@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect
 from flask_wtf import FlaskForm
 
 from wtforms import TextField, IntegerField, TextAreaField, SubmitField, RadioField, SelectField
@@ -42,11 +42,17 @@ def tvsearch():
         #Render the same screen when no radio button is selected
         if form.validate() == False:
             return render_template('tvsearch.html', form = form, question=questions[qno])
+
+
         else:
             #re-initializing the form everytime to update options
-            qno=qno+1
+            
             answers.append(form.Options.data)
-            print(answers)
+            qno=qno+1
+            if(all_questions_answered(questions)):
+                
+                return redirect('/output')
+            
             form.Options.choices=[('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])] 
             return render_template('tvsearch.html', form=form, question=questions[qno])
 
@@ -83,3 +89,10 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+def all_questions_answered(qarray):
+    print(len(qarray), qno)
+    if(len(qarray)==qno):
+        return True
+    else:
+        return False
