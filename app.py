@@ -29,5 +29,9 @@ def inspire():
 def output():
 	return render_template('output.html')
 
+@app.route('/recommendation1')
+def reccomendation1():
+	return render_template('inspireme.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
