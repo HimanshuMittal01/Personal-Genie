@@ -65,6 +65,7 @@ def tvsearch():
 
 @app.route('/')
 def index():
+    clear_all_selections()
     return render_template('index.html')
 
 @app.route('/about')
@@ -73,6 +74,7 @@ def about():
 
 @app.route('/inspire')
 def inspire():
+    clear_all_selections()
     return render_template('inspireme.html')
 
 @app.route('/output')
@@ -97,6 +99,12 @@ def all_questions_answered(qarray):
         return True
     else:
         return False
+
+def clear_all_selections():
+    global qno
+    qno=0
+    global answers
+    del answers[:]
 
 def recommendation_algorithm(tech_answers_array, personality_answers_array ):
     # Make sure to return a list/array object or anything else and changes on the @output route accordingly
