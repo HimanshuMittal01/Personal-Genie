@@ -77,6 +77,7 @@ def inspire():
 
 @app.route('/output')
 def output():
+    #final_output_array= recommendation_algorithm(answers, traits)
 	return render_template('output.html')
 
 @app.route('/recommendation1')
@@ -96,3 +97,7 @@ def all_questions_answered(qarray):
         return True
     else:
         return False
+
+def recommendation_algorithm(tech_answers_array, personality_answers_array ):
+    # Make sure to return a list/array object or anything else and changes on the @output route accordingly
+    pass
