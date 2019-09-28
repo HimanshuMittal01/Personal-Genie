@@ -33,5 +33,9 @@ def output():
 def reccomendation1():
 	return render_template('inspireme.html')
 
+@app.route('/home')
+def home():
+	return render_template('index.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
