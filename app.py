@@ -61,9 +61,25 @@ def tvsearch():
 def index():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/inspire')
 def inspire():
     return render_template('inspireme.html')
+
+@app.route('/output')
+def output():
+	return render_template('output.html')
+
+@app.route('/recommendation1')
+def reccomendation1():
+	return render_template('inspireme.html')
+
+@app.route('/home')
+def home():
+	return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

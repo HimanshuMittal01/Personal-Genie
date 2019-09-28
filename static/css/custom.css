@@ -1,0 +1,7 @@
+blockquote.niceblockquote {
+  background: #FDFDFD;
+}
+blockquote.niceblockquote p {
+  border-left: 5px solid #00897b;
+  color: #00796b;
+}

@@ -9,33 +9,34 @@
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
     <link href="{{ url_for('static', filename='css/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{{ url_for('static', filename='css/custom.css') }}" type="text/css" rel="stylesheet"/>
   </head>
   <body>
     <nav class="light-blue lighten-1" role="navigation">
       <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Personal Genie</a>
         <ul class="right hide-on-med-and-down">
-          <li><a href="#">Navbar Link</a></li>
-          <li><a href="#">Navbar Link</a></li>
-          <li><a href="#">Navbar Link</a></li>
-          <li><a href="#">Navbar Link</a></li>
-          <li><a href="#">Navbar Link</a></li>
+          <li><a href="{{url_for('home')}}">Home</a></li>
+          <li><a href="{{url_for('about')}}">About</a></li>
+          <li><a href="#">Products</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">SignUp</a></li>
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
-          <li><a href="#">Navbar Link</a></li>
-          <li><a href="#">Navbar Link</a></li>
-          <li><a href="#">Navbar Link</a></li>
-          <li><a href="#">Navbar Link</a></li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Products</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">SignUp</a></li>
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
       </div>
     </nav>
      {% block body %}
 
-     
+
 
 
      {% endblock %}

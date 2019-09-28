@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<body>
+	<!--<div class="container" >-->
+		<div class="row" >
+			<div class="flexbox">
+				<div class="col s4 center-align">
+					 
+
+					<a href="{{url_for('reccomendation1')}}">
+						<div class="card-panel hoverable tab"> 
+							<div class="card-image waves-effect waves-block waves-light">
+                				<img class="activator" src="{{url_for('static', filename='images/television.jpeg')}}">
+            				</div>
+
+							<h3>Product Name</h3>
+							<div class="card-content">
+	      						<p>Some info about the product
+	      						</p>
+	      						
+	      					</div>
+	      				</div>
+	      			</a>
+	      		</div>
+	      		<div class="col s4 center-align">
+	      			<a href="{{url_for('reccomendation1')}}">
+	      				<div class="card-panel hoverable tab">
+	      					<div class="card-image waves-effect waves-block waves-light">
+                				<img class="activator" src="{{url_for('static', filename='images/television.jpeg')}}">
+            				</div>
+	      					<h3>Product 2</h3>
+	      					<div class="card-content">
+	      						<p>Some info about the product
+	      						</p>
+	      					</div>
+	      				</div>
+	      			</a>
+	      		</div>
+	      		<div class="col s4 center-align">
+	      			<a href="{{url_for('reccomendation1')}}">
+	      				<div class="card-panel hoverable tab">
+	      					<div class="card-image waves-effect waves-block waves-light">
+                				<img class="activator" src="{{url_for('static', filename='images/television.jpeg')}}">
+            				</div>
+	      					<h3>Product 3</h3>
+	      					<div class="card-content">
+	      						<p>Some info about the product
+	      						</p>
+	      					</div>
+	      				</div>
+	      			</a>
+	      		</div>
+	      	</div>
+
+      	</div>
+    <!--</div>-->
+</body>	
+
+{% endblock %}
