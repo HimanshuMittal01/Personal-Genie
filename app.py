@@ -65,8 +65,9 @@ def tvsearch():
             answers.append(float(form.Options.data))
 
             qno=qno+1
+            if(all_questions_answered(questions)):
 
-
+                return redirect('/output')
             form.Options.choices=[('1',all_options[qno][0]),('2' ,all_options[qno][1]),('3',all_options[qno][2])]
 
 
