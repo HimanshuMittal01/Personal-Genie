@@ -102,7 +102,7 @@ def output():
     del answers[0:no_of_trait_questions]
 
     print(traits, answers)
-    final_output_array= recommendation_algorithm([int(x) for x in traits], [int(x) for x in answers])
+    final_output_array= recommendation_algorithm(traits, answers)
     return render_template('output.html', p1= final_output_array[0], p2=final_output_array[1], p3=final_output_array[2])
 
 @app.route('/recommendation1')
