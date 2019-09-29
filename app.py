@@ -35,7 +35,7 @@ with open('question_sets/tvops.csv') as csv_file:
 
 class QuestionForm(FlaskForm):
 
-   Options = RadioField('Options', choices = [('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])] )
+   Options = RadioField('Options', choices = [('1' ,all_options[qno][0]),('2' ,all_options[qno][1]),('3' ,all_options[qno][2])] )
 
    submit = SubmitField("Send")
 
@@ -62,17 +62,13 @@ def tvsearch():
 
         else:
             #re-initializing the form everytime to update options
-            answers.append(form.Options.data)
+            answers.append(float(form.Options.data))
 
             qno=qno+1
 
-            if(all_questions_answered(questions)):
 
-                return redirect('/output')
+            form.Options.choices=[('1',all_options[qno][0]),('2' ,all_options[qno][1]),('3',all_options[qno][2])]
 
-            form.Options.choices=[('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])]
-
-            form.Options.choices=[('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])]
 
             return render_template('tvsearch.html', form=form, question=questions[qno])
 
