@@ -19,7 +19,7 @@ app = Flask(__name__)
 answers =[]
 questions=[]
 traits=[]
-no_of_trait_questions=6
+no_of_trait_questions=5
 final_output_array=[]
 app.secret_key = 'development key'
 
@@ -43,22 +43,22 @@ class QuestionForm(FlaskForm):
 @app.route('/tvsearch', methods=['GET','POST'])
 def tvsearch():
     global qno
-    
+
     f = open("question_sets/tvset.txt")
     questions=f.readlines()
     f.close()
     form = QuestionForm()
-    
+
     if request.method == 'POST':
         #Render the same screen when no radio button is selected
         if form.validate() == False:
             return render_template('tvsearch.html', form = form, question=questions[qno])
-        
-        
+
+
         elif(all_questions_answered(questions)):
-            
+
             return redirect('/output')
-        
+
 
         else:
             #re-initializing the form everytime to update options
@@ -72,7 +72,7 @@ def tvsearch():
 
             form.Options.choices=[('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])]
 
-            form.Options.choices=[('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])] 
+            form.Options.choices=[('1',all_options[qno][0]),('2',all_options[qno][1]),('3',all_options[qno][2])]
 
             return render_template('tvsearch.html', form=form, question=questions[qno])
 
@@ -104,11 +104,9 @@ def output():
     global no_of_trait_questions
     traits=answers[0:no_of_trait_questions]
     del answers[0:no_of_trait_questions]
-    
+
     print(traits, answers)
-    #final_output_array= recommendation_algorithm(answers, traits)
-    #For eg= your output is as follows
-    final_output_array=['Television 1', 'Televison 2', 'Television 3']
+    final_output_array= recommendation_algorithm([int(x) for x in traits], [int(x) for x in answers])
     return render_template('output.html', p1= final_output_array[0], p2=final_output_array[1], p3=final_output_array[2])
 
 @app.route('/recommendation1')
@@ -146,7 +144,7 @@ TODO: BETTER VARIABLE NAMES, OPTIMIZATION, INCLUDE ALL DATASETS, REFACTOR CHUNKS
 
 NUMBER_OF_PERSONALITY_QUESTIONS = 5
 #Let me test for tv dataset first
-data = pd.read_csv("final_tv.csv", skipinitialspace=True)
+data = pd.read_csv("data/final_tv.csv", skipinitialspace=True)
 
 #Data preprocessing
 data.drop('Unnamed: 0',axis=1,inplace=True)
@@ -226,3 +224,5 @@ def recommendation_algorithm(personality_answers_array, tech_answers_array):
 
     #The datatype is the series, FINAL OUTPUT
     recommended_products = data.iloc[closest_for_fx]['full_product_name']
+
+    return recommended_products.to_list()

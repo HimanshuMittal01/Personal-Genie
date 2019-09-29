@@ -3,10 +3,21 @@ trait question 2
 trait question 3
 trait question 4
 trait question 5
-trait question 6
 feature question1
 feature question2
 feature question3
 feature question4
 feature question5
 feature question6
+feature question6
+feature question7
+feature question8
+feature question9
+feature question10
+feature question11
+feature question12
+feature question13
+feature question14
+feature question15
+feature question16
+feature question17
