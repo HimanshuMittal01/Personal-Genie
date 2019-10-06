@@ -1,8 +1,8 @@
-trait question 1
-trait question 2
-trait question 3
-trait question 4
-trait question 5
+How often do you enjoy hearing new ideas?
+Rate your level of comfortableness around people!
+Rate how organized are you on the scale of 1 to 10!
+Do you easily sympathize with people?
+Do you tend be moody easily?
 feature question1
 feature question2
 feature question3

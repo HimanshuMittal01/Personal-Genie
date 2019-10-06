@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 
 from wtforms import TextField, IntegerField, TextAreaField, SubmitField, RadioField, SelectField
 from wtforms import validators, ValidationError
+from flask_sqlalchemy import SQLAlchemy
 import csv
 
 #Importing libraries for the algorithm
@@ -17,65 +18,81 @@ from sklearn.ensemble import RandomForestRegressor
 #change no_of_trait_questions accordingly below
 app = Flask(__name__)
 answers =[]
-questions=[]
+
 traits=[]
 no_of_trait_questions=5
 final_output_array=[]
+qno=1
+no_of_rows=0
+
 app.secret_key = 'development key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
-qno=0
-all_options=[]
+db= SQLAlchemy(app)
 
-with open('question_sets/tvops.csv') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
 
-    for row in csv_reader:
-        all_options.append(row)
+class questions_table(db.Model):
+    question_number = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(500), unique=True, nullable=False)
+    answer_type = db.Column(db.String(1), nullable=False)
+    option_1_range= db.Column(db.String(50),nullable=False)
+    option_2_range= db.Column(db.String(50),nullable=False)
+    option_3= db.Column(db.String(50))
+    option_1_value=db.Column(db.Integer,nullable=False)
+    option_2_value=db.Column(db.Integer,nullable=False)
+    option_3_value=db.Column(db.Integer,nullable=False)
+
 
 
 class QuestionForm(FlaskForm):
-
-   Options = RadioField('Options', choices = [('1' ,all_options[qno][0]),('2' ,all_options[qno][1]),('3' ,all_options[qno][2])] )
-
-   submit = SubmitField("Send")
+    a=questions_table.query.get(qno)
+    Options = RadioField('Options', choices = [(float(a.option_1_value) ,a.option_1_range),(float(a.option_2_value) ,a.option_2_range),(float(a.option_3_value) , a.option_3)]) 
+    # Options = RadioField('Options', choices = [('1' ,all_options[qno][0]),('2' ,all_options[qno][1]),('3' ,all_options[qno][2])] )
+    submit = SubmitField("Send")
 
 
 @app.route('/tvsearch', methods=['GET','POST'])
 def tvsearch():
+    global no_of_rows
     global qno
-
-    f = open("question_sets/tvset.txt")
-    questions=f.readlines()
-    f.close()
+    no_of_rows= questions_table.query.count()
     form = QuestionForm()
-
+    print(answers)
+    question= questions_table.query.get(qno).question
     if request.method == 'POST':
-        #Render the same screen when no radio button is selected
-        if form.validate() == False:
-            return render_template('tvsearch.html', form = form, question=questions[qno])
+ #known issue- no validation if no rb is selected
+        # Render the same screen when no radio button is selected
+        # if form.validate() == False:
+        if(False):
+            print("can't validate")
+            return render_template('tvsearch.html', form = form, question=question)
+        
 
-
-        elif(all_questions_answered(questions)):
-
+        #Render output page if all questions are answered
+        elif(all_questions_answered(no_of_rows)):
             return redirect('/output')
 
 
         else:
             #re-initializing the form everytime to update options
             answers.append(float(form.Options.data))
+            if(all_questions_answered(no_of_rows)):
+                return redirect('/output')
 
             qno=qno+1
-            if(all_questions_answered(questions)):
-
-                return redirect('/output')
-            form.Options.choices=[('1',all_options[qno][0]),('2' ,all_options[qno][1]),('3',all_options[qno][2])]
+            #question refresh, code to be optimized
+            question= questions_table.query.get(qno).question
 
 
-            return render_template('tvsearch.html', form=form, question=questions[qno])
+            #render the mcq choices here
+            a=questions_table.query.get(qno)
+            form.Options.choices = [(float(a.option_1_value) ,a.option_1_range),(float(a.option_2_value) ,a.option_2_range),(float(a.option_3_value) , a.option_3)]
+            # form.Options.choices=[('1',all_options[qno][0]),('2' ,all_options[qno][1]),('3',all_options[qno][2])]
+            return render_template('tvsearch.html', form=form, question=question)
 
     elif request.method == 'GET':
         # this part runs for the first question
-        return render_template('tvsearch.html', form = form, question=questions[qno] )
+        return render_template('tvsearch.html', form = form, question=question )
 
 
 
@@ -117,15 +134,15 @@ def home():
 if __name__ == '__main__':
     app.run(debug=True)
 
-def all_questions_answered(qarray):
-    if(len(qarray)==qno+1):
+def all_questions_answered(no_of_rows):
+    if(no_of_rows==qno):
         return True
     else:
         return False
 
 def clear_all_selections():
     global qno
-    qno=0
+    qno=1
     global answers
     del answers[:]
     global trait_collection_finished
